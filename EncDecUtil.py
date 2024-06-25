@@ -4,6 +4,17 @@ import binascii
 import sys
 
 def encrypt_data(plaintext_hex, key_hex, iv_hex):
+    """
+    Encrypts the given plaintext using Triple DES encryption in CBC mode.
+    
+    Args:
+        plaintext_hex (str): The plaintext in hexadecimal format.
+        key_hex (str): The encryption key in hexadecimal format.
+        iv_hex (str): The initialization vector (IV) in hexadecimal format.
+    
+    Returns:
+        str: The encrypted data in hexadecimal format, or an error message if encryption fails.
+    """
     try:
         # Convert hex data to bytes
         plaintext_bytes = binascii.unhexlify(plaintext_hex)
@@ -29,6 +40,17 @@ def encrypt_data(plaintext_hex, key_hex, iv_hex):
          return "Error in encryption: {}".format(e)
 
 def decrypt_data(ciphertext_hex, key_hex, iv_hex):
+    """
+    Decrypts the given ciphertext using Triple DES decryption in CBC mode.
+    
+    Args:
+        ciphertext_hex (str): The ciphertext in hexadecimal format.
+        key_hex (str): The decryption key in hexadecimal format.
+        iv_hex (str): The initialization vector (IV) in hexadecimal format.
+    
+    Returns:
+        str: The decrypted data in hexadecimal format, or an error message if decryption fails.
+    """
     try:
         # Convert hex data to bytes
         ciphertext_bytes = binascii.unhexlify(ciphertext_hex)
@@ -51,6 +73,15 @@ def decrypt_data(ciphertext_hex, key_hex, iv_hex):
         return "Error in decryption: {}".format(e)
 
 def _pad(data):
+    """
+    Pads the given data to ensure it is a multiple of the block size (8 bytes for DES3).
+    
+    Args:
+        data (bytes): The data to be padded.
+    
+    Returns:
+        bytes: The padded data.
+    """
     # PKCS#7 padding
     pad_len = 8 - (len(data) % 8)
     return data + bytes([pad_len] * pad_len)
